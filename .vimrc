@@ -108,6 +108,8 @@ call vundle#end()
 let g:NERDSpaceDelims = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
+" Show hidden files
+let NERDTreeShowHidden=1
 
 let g:syntastic_python_checkers=['flake8']
 
