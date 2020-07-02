@@ -97,11 +97,10 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-export PATH="/usr/local/opt/ruby/bin:$PATH"
-
 # aliases
 alias py="python3"
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+export PATH="/usr/local/sbin:$PATH"
+set vim = "/usr/local/bin/vim"

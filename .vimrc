@@ -79,9 +79,15 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 " let g:syntastic_debug = 3
+let g:syntastic_python_checkers=['flake8']
+let g:syntastic_enable_elixir_checker = 1
 
 " Enable all Python syntax highlighting features
 let python_highlight_all=1
+
+" Mapped tab for completion suggestion
+inoremap <expr> <Tab> pumvisible() ? '<C-n>' :
+\ getline('.')[col('.')-2] =~# '[[:alnum:].-_#$]' ? '<C-x><C-o>' : '<Tab>'
 
 " Set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -95,13 +101,11 @@ Plugin 'townk/vim-autoclose'
 Plugin 'scrooloose/syntastic'
 Plugin 'nvie/vim-flake8'
 Plugin 'sheerun/vim-polyglot'
-" Plugin 'valloric/youcompleteme'
 Plugin 'docunext/closetag.vim'
-" Plugin 'janko-m/vim-test'
-" Plugin 'junegunn/fzf'
-" Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-" Plugin 'tpope/vim-fugitive'
 Plugin 'wincent/command-t'
+Plugin 'elixir-editors/vim-elixir' 
+Plugin 'slashmili/alchemist.vim'
+Plugin 'OmniSharp/omnisharp-vim'
 call vundle#end()
 
 " Add spaces after comment delimiters by default
@@ -110,8 +114,6 @@ let g:NERDSpaceDelims = 1
 let g:NERDToggleCheckAllLines = 1
 " Show hidden files
 let NERDTreeShowHidden=1
-
-let g:syntastic_python_checkers=['flake8']
 
 let mapleader=" "
 
@@ -152,8 +154,10 @@ map <C-K> <C-W>k <cr>
 map <C-L> <C-W>l <cr>
 " Navigate splits
 nmap <tab> <c-w>w
+" Open files
+map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
 
 autocm Filetype gitcommit setlocal spell
 
-let $RUBYHOME=$HOME."/.rvm/rubies/ruby-2.7.1"
-set rubydll=$RUBYHOME/lib/libruby.2.7.dylib
+" let $RUBYHOME=$HOME."/.rvm/rubies/default"
+" set rubydll=$RUBYHOME/lib/libruby.dylib
