@@ -1,14 +1,33 @@
-" Set compatibility to Vim only.
-set nocompatible
-
 " Helps force plug-ins to load correctly when it is turned back on below.
 filetype off
 
+" Set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'preservim/nerdtree'
+Plugin 'preservim/nerdcommenter'
+Plugin 'tpope/vim-surround'
+Plugin 'majutsushi/tagbar'
+Plugin 'townk/vim-autoclose'
+Plugin 'scrooloose/syntastic'
+Plugin 'nvie/vim-flake8'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'docunext/closetag.vim'
+Plugin 'wincent/command-t'
+Plugin 'slashmili/alchemist.vim'
+Plugin 'OmniSharp/omnisharp-vim'
+Plugin 'mhinz/vim-mix-format'
+Plugin 'elixir-editors/vim-elixir' 
+Plugin 'tpope/vim-endwise'
+Plugin 'aserebryakov/vim-todo-lists'
+call vundle#end()
+
+" Set compatibility to Vim only.
+set nocompatible
+
 " Turn on syntax highlighting.
 syntax on
-
-" For plug-ins to load correctly.
-filetype plugin indent on
 
 " Turn off modelines
 set modelines=0
@@ -82,6 +101,10 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_enable_elixir_checker = 1
 
+" Mix format settings
+let g:mix_format_on_save = 1
+let g:mix_format_options = '--check-equivalent'
+
 " Enable all Python syntax highlighting features
 let python_highlight_all=1
 
@@ -89,24 +112,8 @@ let python_highlight_all=1
 inoremap <expr> <Tab> pumvisible() ? '<C-n>' :
 \ getline('.')[col('.')-2] =~# '[[:alnum:].-_#$]' ? '<C-x><C-o>' : '<Tab>'
 
-" Set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'preservim/nerdtree'
-Plugin 'preservim/nerdcommenter'
-Plugin 'tpope/vim-surround'
-Plugin 'majutsushi/tagbar'
-Plugin 'townk/vim-autoclose'
-Plugin 'scrooloose/syntastic'
-Plugin 'nvie/vim-flake8'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'docunext/closetag.vim'
-Plugin 'wincent/command-t'
-Plugin 'elixir-editors/vim-elixir' 
-Plugin 'slashmili/alchemist.vim'
-Plugin 'OmniSharp/omnisharp-vim'
-call vundle#end()
+" For plug-ins to load correctly.
+filetype plugin indent on
 
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -121,8 +128,6 @@ let mapleader=" "
 map <leader>n :NERDTreeToggle<CR>
 " Open Tagbar Window
 nmap <F8> :TagbarToggle<CR>
-
-" map :f :find<space>
 
 " Remap Esc with jj
 imap jj <Esc>
