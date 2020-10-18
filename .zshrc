@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/mamer/.oh-my-zsh"
+export ZSH="[path_to_directory]/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -42,10 +42,10 @@ ZSH_THEME="pygmalion"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -88,19 +88,32 @@ source $ZSH/oh-my-zsh.sh
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
 #
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-# aliases
-alias py="python3"
+# Git aliases
+alias gs="git status --porcelain"
+alias gl="git pull"
+alias gp="git push"
+alias go="git checkout"
+alias ga="git add"
+alias gc="git commit"
+alias gd="git diff"
+alias gh="git log"
 
+# Ruby cofiguration
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-export PATH="/usr/local/sbin:$PATH"
+
+set py = "python3"
+set vi = "/usr/local/bin/vim"
 set vim = "/usr/local/bin/vim"
+
+# Comment out if you're not using asdf
+. /usr/local/opt/asdf/asdf.sh
+
+export PATH="/usr/local/sbin:$PATH"
+
+# Comment out if you're not using aws-tools (https://github.com/camfowler/aws-tools)
+export PATH="$PATH:$HOME/src/aws-tools/bin"
+
+# Docker aliases
+alias dc=docker-compose
