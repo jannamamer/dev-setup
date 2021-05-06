@@ -20,6 +20,9 @@ Plugin 'elixir-editors/vim-elixir'
 Plugin 'w0rp/ale'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-rails'
 call vundle#end()
 
 " Set compatibility to Vim only.
@@ -70,7 +73,7 @@ set showmatch " Show matching brackets
 set matchpairs+=<:>
 
 " Set status line display
-set statusline=%F%m%r%h%w
+set statusline=%F%m%r%h%w\ %{fugitive#statusline()}
 hi StatusLine                  ctermfg=16     ctermbg=255     cterm=NONE
 hi StatusLineNC                ctermfg=59     ctermbg=250     cterm=NONE
 
@@ -119,7 +122,13 @@ let mapleader=" "
 
 " NERDTree settings
 map <leader>n :NERDTreeToggle<CR>
-set wildignore+=deps,_build,bin,node_modules
+set wildignore+=deps,_build,node_modules,tmp
+
+" GitGutter settings
+highlight GitGutterAdd    guifg=#009900 ctermfg=2
+highlight GitGutterChange guifg=#bbbb00 ctermfg=3
+highlight GitGutterDelete guifg=#ff2222 ctermfg=1
+
 " Open Tagbar Window
 nmap <F8> :TagbarToggle<CR>
 

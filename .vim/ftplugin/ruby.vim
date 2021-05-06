@@ -1,7 +1,8 @@
 " Ale settings
 let g:ale_fixers = {
- \   'ruby': ['standardrb'],
+ \   'ruby': ['rubocop'],
  \ }
+
 let g:ale_linters = {
- \   'ruby': ['standardrb', 'rubocop'],
+ \   'ruby': ['brakeman', 'rails_best_practices', 'reek', 'rubocop'],
  \ }
