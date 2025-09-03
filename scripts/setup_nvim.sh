@@ -14,18 +14,12 @@ else
   echo "✅ vim-plug downloaded..."
 fi
 
-echo "Copying ftplugin folder..."
-mkdir -p ~/.config/nvim/ftplugin
-cp -r ./nvim/ftplugin/* ~/.config/nvim/ftplugin/
-echo "✅ ftplugin folder copied..."
+echo "Copying nvim files and folders..."
+mkdir -p ~/.config/nvim
+cp -r ./nvim/ ~/.config/nvim/
+echo "✅ nvim files and folders copied..."
 
-echo "Copying plugins folder..."
-mkdir -p ~/.config/nvim/plugins
-cp -r ./nvim/plugins/* ~/.config/nvim/plugins/
-echo "✅ plugins folder copied..."
-
-echo "Copying nvim configuration file..."
-cp ./nvim/init.vim ~/.config/nvim/init.vim
+echo "Installing plugins..."
 nvim --headless +PlugInstall +qall
 nvim --headless +TSUpdate +qall
-echo && echo "✅ Nvim configuration file copied."
+echo && echo "✅ Plugins installed..."
