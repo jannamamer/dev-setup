@@ -97,7 +97,7 @@ require("nvim-tree").setup({
 		highlight_modified = "all",
 		highlight_hidden = "name",
 		highlight_bookmarks = "none",
-		highlight_clipboard = "all",
+		highlight_clipboard = "name",
 		indent_markers = {
 			enable = false,
 			inline_arrows = true,

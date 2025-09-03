@@ -72,7 +72,7 @@ set ttyfast
 set termguicolors
 
 " Use terminal-aware colorscheme
-colorscheme pablo
+colorscheme slate
 
 " Text Width
 set textwidth=100

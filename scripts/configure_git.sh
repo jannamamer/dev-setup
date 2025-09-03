@@ -15,5 +15,3 @@ git config --global user.email "$git_email"
 git config --global init.defaultBranch main
 git config --global pull.rebase false
 git config --global core.editor "vim"
-
-echo "✅ Git configured successfully."
