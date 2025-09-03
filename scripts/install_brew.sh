@@ -23,7 +23,6 @@ echo "Installing Homebrew into $HOMEBREW_PREFIX..."
 #   fi
 # fi
 
-export HOMEBREW_PREFIX
 export HOMEBREW_REPOSITORY="$HOMEBREW_PREFIX"
 export HOMEBREW_CELLAR="$HOMEBREW_PREFIX/Cellar"
 export HOMEBREW_NO_ENV_HINTS=1

@@ -1,171 +1,251 @@
-" Helps force plug-ins to load correctly when it is turned back on below.
-filetype off
+" Leader Key
+let mapleader=" "
 
-" Set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'preservim/nerdtree'
-Plugin 'preservim/nerdcommenter'
-Plugin 'tpope/vim-surround'
-Plugin 'majutsushi/tagbar'
-Plugin 'townk/vim-autoclose'
-Plugin 'nvie/vim-flake8'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'docunext/closetag.vim'
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
-Plugin 'slashmili/alchemist.vim'
-Plugin 'OmniSharp/omnisharp-vim'
-Plugin 'elixir-editors/vim-elixir' 
-Plugin 'w0rp/ale'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-rails'
-call vundle#end()
+" ========================================
+" Plugin Manager: vim-plug
+" ========================================
+call plug#begin()
+  " Files Plugins
+  Plug 'junegunn/fzf'
+  Plug 'preservim/nerdtree'
+  Plug 'junegunn/fzf.vim'
 
-" Set compatibility to Vim only.
-set nocompatible
+  " Format Plugins
+  Plug 'preservim/nerdcommenter'
 
-" Turn on syntax highlighting.
+  " Git Plugins
+  Plug 'airblade/vim-gitgutter'   
+  Plug 'tpope/vim-fugitive'
+call plug#end()
+
+" Enable filetype detection and plugins
+filetype plugin indent on
 syntax on
 
-" Turn off modelines
+" ========================================
+" General Settings
+" ========================================
+
+" Disables Vi compatibility mode and enables all Vim features
+set nocompatible
+
+" Sets the internal character encoding
+set encoding=utf-8
+
+" Disables “modelines” in files
 set modelines=0
 
-" Automatically wrap text that extends beyond the screen length.
+" Displays line numbers
+set number
+
+" Highlights the current line your cursor is on
+set cursorline
+
+" Automatically wrap text that extends beyond the screen length
 set wrap
 
-" Vim's auto indentation feature does not work properly with text copied from outside of Vim. Press the <F2> key to toggle paste mode on/off.
-nnoremap <F2> :set invpaste paste?<CR>
-imap <F2> <C-O>:set invpaste paste?<CR>
-set pastetoggle=<F2>
+" Display 5 lines above/below the cursor when scrolling with a mouse.
+set scrolloff=5
 
+" Use the system clipboard for copy/paste.
+set clipboard=unnamed
+
+" Updates the terminal window title with the current file name
+set title
+
+" Enables mouse support in all modes
+set mouse=a
+
+" Speed up scrolling in Vim
+set ttyfast
+
+" Open vsplit to the right of the current window
+set splitright
+
+" Text Width
 set textwidth=100
+
+" Default tabs and indentation settings
 set expandtab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set noshiftround
 set autoindent
-set number
-set cursorline
 
-" Display 5 lines above/below the cursor when scrolling with a mouse.
-set scrolloff=5
+" --- Search settings ---
 
-" Fixes common backspace problems
-set backspace=indent,eol,start
+" Highlight matching search patterns
+set hlsearch
 
-" Speed up scrolling in Vim
-set ttyfast
+" Enable incremental search
+set incsearch
 
-" Status bar
+" Include matching uppercase words with lowercase search term
+set ignorecase
+
+" Include only uppercase words with uppercase search term
+set smartcase
+
+" --- Display settings ---
+
+" Shows the current Vim mode in the command line
+set showmode
+
+" Displays partial command inputs in the bottom right as you type them.
+set showcmd
+
+" Show matching brackets
+set showmatch
+
+" Adds the angle brackets (< >) as matching pairs
+set matchpairs+=<:>
+
+" Always show the status line
 set laststatus=2
 
-" Display options
-set showmode
-set showcmd
-set showmatch " Show matching brackets
+" Fixes common backspace problems
+set backspace=indent,eol,start 
 
-" Highlight matching pairs of brackets. Use the '%' character to jump between them.
-set matchpairs+=<:>
+" Ignore patterns for completion
+set wildignore+=deps,_build,node_modules,tmp
+
+" ========================================
+" Mappings
+" ========================================
+
+" Auto indentation feature does not work properly with text copied from outside of Vim. Press the <F2> key to toggle paste mode on/off.
+nnoremap <F2> :set invpaste paste?<CR>
+imap <F2> <C-O>:set invpaste paste?<CR>
+set pastetoggle=<F2>
+
+" Escape insert mode
+imap jj <Esc> 
+
+" Save / Quit
+nnoremap ss :w<CR>
+nnoremap sa :w!<CR>
+nnoremap qq :q<CR>
+nnoremap qa :q!<CR>
+
+" Window Splits
+nnoremap <leader>mv :vsplit<CR>
+nnoremap <leader>ms :split<CR>
+nnoremap <C-J> <C-W>h
+nnoremap <C-K> <C-W>j
+nnoremap <C-I> <C-W>k
+nnoremap <C-L> <C-W>l
+nnoremap <C-O> <C-W>i
+nmap <tab> <C-W>w
+
+" Suspend Vim
+nnoremap <leader>z <C-Z>
+
+" Tagbar
+nnoremap <F8> :TagbarToggle<CR>
+
+" Mapped tab for completion suggestion
+inoremap <expr> <Tab> pumvisible() ? '<C-n>' :
+\ getline('.')[col('.')-2] =~# '[[:alnum:].-_#$]' ? '<C-x><C-o>' : '<Tab>'
+
+" ========================================
+" Plugin Configurations
+" ========================================
+
+" --- nerdtree ---
+
+" File browser
+nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+
+" Show hidden files
+let NERDTreeShowHidden = 1
+
+" Start NERDTree and leave the cursor in it.
+autocmd VimEnter * NERDTree
+
+" --- nerdcommenter ---
+
+" Toggle comment normal mode
+nnoremap kc <Plug>NERDCommenterToggle
+
+" Toggle comment visual mode
+vnoremap kc <Plug>NERDCommenterToggle
+
+" Uncomment normal mode
+nnoremap ku <Plug>NERDCommenterUncomment
+
+" Uncomment visual mode
+vnoremap ku <Plug>NERDCommenterUncomment
+
+" Unmap default mappings
+let g:NERDCreateDefaultMappings = 0
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
+
+" --- fzf ---
+
+" Redefine Files to open in new tab
+command! Files call fzf#vim#files('', {'sink': 'vsplit'})
+
+" Find files
+nnoremap <leader>p :Files<CR>
+
+" Find string (ripgrep required)
+nnoremap <leader>f :Rg<Space>
+
+" --- jq ---
+
+" Format JSON
+nnoremap <leader>jf :%!jq '.'<CR>
+
+" --- vim-fugitive ---
 
 " Set status line display
 set statusline=%F%m%r%h%w\ %{fugitive#statusline()}
 hi StatusLine                  ctermfg=16     ctermbg=255     cterm=NONE
 hi StatusLineNC                ctermfg=59     ctermbg=250     cterm=NONE
 
-" Encoding
-set encoding=utf-8
+" Git status
+nnoremap <leader>gs :Git<CR>
 
-" Highlight matching search patterns
-set hlsearch
-" Enable incremental search
-set incsearch
-" Include matching uppercase words with lowercase search term
-set ignorecase
-" Include only uppercase words with uppercase search term
-set smartcase
+" Push and pull
+nnoremap <leader>gp :Git push<CR>
+nnoremap <leader>gl :Git pull<CR>
 
-set clipboard=unnamed
+" Git add
+nnoremap <leader>ga :Git add<CR>
 
-set title
+" Git log for repo
+nnoremap <leader>glg :Git log<CR>
 
-" Ale settings
-let g:ale_sign_error = '✘'
-let g:ale_sign_warning = '⚠'
-highlight ALEErrorSign ctermbg=NONE ctermfg=red
-highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
-let g:ale_lint_on_save = 1
-let g:ale_fix_on_save = 1
+" Diff current file against index
+nnoremap <leader>gd :Gvdiffsplit<CR>
 
-nnoremap ]r :ALENextWrap<CR>
-nnoremap [r :ALEPreviousWrap<CR>
+" Git blame for current file
+nnoremap <leader>gb :Git blame<CR>
 
-" Mapped tab for completion suggestion
-inoremap <expr> <Tab> pumvisible() ? '<C-n>' :
-\ getline('.')[col('.')-2] =~# '[[:alnum:].-_#$]' ? '<C-x><C-o>' : '<Tab>'
+" Commit
+nnoremap <leader>gc :Git commit<CR>
+nnoremap <leader>gcf :Git commit cf<CR>
 
-" For plug-ins to load correctly.
-filetype plugin indent on
+" Checkout branches
+nnoremap <leader>gco :Git checkout<Space>
 
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-" Enable NERDCommenterToggle to check all selected lines is commented or not
-let g:NERDToggleCheckAllLines = 1
-" Show hidden files
-let NERDTreeShowHidden=1
+" If you hit a merge conflict, this helps resolve it visually
+nnoremap <leader>gm :Gvdiffsplit!<CR>
 
-let mapleader=" "
+" Git commit message formatting
+autocm Filetype gitcommit setlocal spell
 
-" NERDTree settings
-map <leader>n :NERDTreeToggle<CR>
-set wildignore+=deps,_build,node_modules,tmp
+" --- vim-gitgutter ---
 
 " GitGutter settings
 highlight GitGutterAdd    guifg=#009900 ctermfg=2
 highlight GitGutterChange guifg=#bbbb00 ctermfg=3
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1
-
-" Open Tagbar Window
-nmap <F8> :TagbarToggle<CR>
-
-" Remap Esc with jj
-imap jj <Esc>
-
-" Save Window
-map ss :w <cr>
-map sa :w! <cr>
-
-" Exit Window
-map qq :q <cr>
-map qa :q! <cr>
-
-" Map suspend
-map <leader>z <C-Z>
-
-" Windows Mappings
-map <leader>mv :vsplit <cr>
-map <leader>ms :split <cr>
-map <C-J> <C-W>h <cr>
-map <C-K> <C-W>j <cr>
-map <C-I> <C-W>k <cr>
-map <C-L> <C-W>l <cr>
-map <C-O> <C-W>i <cr>
-
-" Navigate splits
-nmap <tab> <c-w>w
-
-" Open files
-nnoremap <leader>f :Files<CR>
-
-" Search in files
-nnoremap <leader>g :Rg<Space>
-
-" Format json
-map <leader>jf :%!jq '.' <cr>
-
-autocm Filetype gitcommit setlocal spell
