@@ -13,7 +13,8 @@ Plugin 'townk/vim-autoclose'
 Plugin 'nvie/vim-flake8'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'docunext/closetag.vim'
-Plugin 'wincent/command-t'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 Plugin 'slashmili/alchemist.vim'
 Plugin 'OmniSharp/omnisharp-vim'
 Plugin 'elixir-editors/vim-elixir' 
@@ -159,7 +160,10 @@ map <C-O> <C-W>i <cr>
 nmap <tab> <c-w>w
 
 " Open files
-map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
+nnoremap <leader>f :Files<CR>
+
+" Search in files
+nnoremap <leader>g :Rg<Space>
 
 " Format json
 map <leader>jf :%!jq '.' <cr>
