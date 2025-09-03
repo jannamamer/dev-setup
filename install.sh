@@ -23,8 +23,8 @@ bold "Installing Dev Tools..."
 ./scripts/install_dev-tools.sh | sed $'s/^/\t/'
 bold "✅ Dev Tools installed..." && echo
 
-bold "Configure Git Credentials..."
-./scripts/configure_git.sh | sed $'s/^/\t/'
-bold "✅ Git configured successfully." && echo
+bold "Setting up git..."
+./scripts/setup_git.sh | sed $'s/^/\t/'
+bold "✅ Git setup complete..." && echo
 
 bold "✅ Setup complete..."
