@@ -36,9 +36,9 @@ require("conform").setup({
 -- Format file normal mode
 vim.keymap.set("n", "<C-f>", function()
 	require("conform").format()
-end, { noremap = true, silent = true })
+end, { noremap = true, silent = true, desc = "Format file" })
 
 -- Format file visual mode
 vim.keymap.set("v", "<C-f>", function()
 	require("conform").format()
-end, { noremap = true, silent = true })
+end, { noremap = true, silent = true, desc = "Format file" })

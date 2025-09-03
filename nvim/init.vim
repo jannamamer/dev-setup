@@ -12,6 +12,9 @@ call plug#begin()
   " Plugin manager (for updates)
   Plug 'junegunn/vim-plug'
 
+  " Display keybings
+  Plug 'folke/which-key.nvim'
+
   " File finder and navigation
   Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
@@ -123,38 +126,30 @@ set backspace=indent,eol,start
 " Mappings
 " ========================================
 
-" Auto indentation feature does not work properly with text copied from outside of Vim. Press the <F2> key to toggle paste mode on/off.
-nnoremap <F2> :set invpaste paste?<CR>
-imap <F2> <C-O>:set invpaste paste?<CR>
+lua << EOF
+vim.keymap.set("i", "hh", "<Esc>", { noremap = true, silent = true, desc = "Escape (Insert Mode)" })
+vim.keymap.set("n", "<leader>z", "<C-Z>", { noremap = true, silent = true, desc = "Suspend Vim" })
 
-" Escape insert mode
-imap jj <Esc> 
+-- Save / Quit
+vim.keymap.set("n", "ss", ":w<CR>", { noremap = true, silent = true, desc = "Save File" })
+vim.keymap.set("n", "sa", ":w!<CR>", { noremap = true, silent = true, desc = "Save File: Force" })
+vim.keymap.set("n", "qq", ":q<CR>", { noremap = true, silent = true, desc = "Quit" })
+vim.keymap.set("n", "qa", ":q!<CR>", { noremap = true, silent = true, desc = "Quit: Without Saving" })
 
-" Save / Quit
-nnoremap ss :w<CR>
-nnoremap sa :w!<CR>
-nnoremap qq :q<CR>
-nnoremap qa :q!<CR>
+-- Window Splits
+vim.keymap.set("n", "<leader>mv", ":vsplit<CR>", { noremap = true, silent = true, desc = "Window: Vertical Split" })
+vim.keymap.set("n", "<leader>ms", ":split<CR>", { noremap = true, silent = true, desc = "Window: Horizontal Split" })
+vim.keymap.set("n", "<C-H>", "<C-W>h", { noremap = true, silent = true, desc = "Move: Left Window" })
+vim.keymap.set("n", "<C-L>", "<C-W>l", { noremap = true, silent = true, desc = "Move: Right Window" })
+vim.keymap.set("n", "<C-K>", "<C-W>j", { noremap = true, silent = true, desc = "Move: Down Window" })
+vim.keymap.set("n", "<C-J>", "<C-W>k", { noremap = true, silent = true, desc = "Move: Up Window" })
+vim.keymap.set("n", "<Tab>", "<C-W>w", { noremap = true, silent = true, desc = "Move: Next Window" })
 
-" Window Splits
-nnoremap <leader>mv :vsplit<CR>
-nnoremap <leader>ms :split<CR>
-nnoremap <C-J> <C-W>h
-nnoremap <C-K> <C-W>j
-nnoremap <C-I> <C-W>k
-nnoremap <C-L> <C-W>l
-nnoremap <C-O> <C-W>i
-nnoremap <Tab> <C-w>w
+-- Editor
+vim.keymap.set("n", "k", "j", { noremap = true, silent = true, desc = "Move Cursor: Down" })
+vim.keymap.set("n", "j", "k", { noremap = true, silent = true, desc = "Move Cursor: Up" })
 
-" Suspend Vim
-nnoremap <leader>z <C-Z>
-
-" Tagbar
-nnoremap <F8> :TagbarToggle<CR>
-
-" Mapped tab for completion suggestion
-inoremap <expr> <Tab> pumvisible() ? '<C-n>' :
-\ getline('.')[col('.')-2] =~# '[[:alnum:].-_#$]' ? '<C-x><C-o>' : '<Tab>'
+EOF
 
 " ========================================
 " Plugin Configurations
@@ -183,6 +178,9 @@ luafile ~/.config/nvim/plugins/parsers.lua
 " --- nvim-lint ---
 luafile ~/.config/nvim/plugins/linters.lua
 
+" --- which-key.nvim ---
+luafile ~/.config/nvim/plugins/key_finder.lua
+
 " --- nerdcommenter ---
 
 " Toggle comment normal mode
@@ -207,6 +205,10 @@ let g:NERDSpaceDelims = 1
 let g:NERDToggleCheckAllLines = 1
 
 " --- jq ---
-
-" Format JSON
-nnoremap <leader>jf :%!jq '.'<CR>
+lua << EOF
+vim.keymap.set("v", "<leader>jf", ":%!jq '.'<CR>", {
+  noremap = true,
+  silent = true,
+  desc = "Format JSON"
+})
+EOF

@@ -4,21 +4,45 @@ local env = config.get_env()
 local function on_attach(bufnr)
 	local api = require("nvim-tree.api")
 
-	-- Load all default mappings
-	api.config.mappings.default_on_attach(bufnr)
-
 	local function opts(desc)
-		return {
-			desc = "nvim-tree: " .. desc,
-			buffer = bufnr,
-			noremap = true,
-			silent = true,
-			nowait = true,
-		}
+		return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
 	end
 
-	-- Disable <Tab> only (without affecting <CR> or others)
-	vim.keymap.set("n", "<Tab>", "<C-w>w", opts("Switch window"))
+	vim.keymap.set("n", "<2-LeftMouse>", api.node.open.edit, opts("Open File Or Directory"))
+
+	vim.keymap.set("n", "<C-k>", api.node.show_info_popup, opts("Info"))
+
+	vim.keymap.set("n", "<CR>", api.node.open.edit, opts("Open File Or Directory"))
+	vim.keymap.set("n", "<C-v>", api.node.open.vertical, opts("Open File: Vertical Split"))
+	vim.keymap.set("n", "<C-s>", api.node.open.horizontal, opts("Open File: Horizontal Split"))
+	vim.keymap.set("n", "<BS>", api.node.navigate.parent_close, opts("Close Directory"))
+
+	vim.keymap.set("n", "R", api.tree.reload, opts("Refresh"))
+
+	vim.keymap.set("n", "a", api.fs.create, opts("Create File Or Directory"))
+	vim.keymap.set("n", "c", api.fs.copy.node, opts("Copy File Or Directory"))
+	vim.keymap.set("n", "d", api.fs.remove, opts("Delete File Or Directory"))
+	vim.keymap.set("n", "p", api.fs.paste, opts("Paste File Or Directory"))
+	vim.keymap.set("n", "x", api.fs.cut, opts("Cut File Or Directory"))
+
+	vim.keymap.set("n", "r", api.fs.rename_basename, opts("Rename: Basename"))
+	vim.keymap.set("n", "m", api.fs.rename_full, opts("Rename: Full Path"))
+
+	vim.keymap.set("n", "F", api.live_filter.clear, opts("Live Filter: Clear"))
+	vim.keymap.set("n", "f", api.live_filter.start, opts("Live Filter: Start"))
+
+	vim.keymap.set("n", "D", api.tree.toggle_hidden_filter, opts("Toggle Filter: Dotfiles"))
+	vim.keymap.set("n", "I", api.tree.toggle_gitignore_filter, opts("Toggle Filter: Git Ignore"))
+	vim.keymap.set("n", "H", api.tree.toggle_custom_filter, opts("Toggle Filter: Hidden"))
+
+	vim.keymap.set("n", "C", api.tree.collapse_all, opts("Collapse All"))
+	vim.keymap.set("n", "E", api.tree.expand_all, opts("Expand All"))
+
+	vim.keymap.set("n", "<C-c>", api.fs.copy.filename, opts("Copy: Name"))
+	vim.keymap.set("n", "Y", api.fs.copy.absolute_path, opts("Copy: Absolute Path"))
+	vim.keymap.set("n", "<C-y>", api.fs.copy.relative_path, opts("Copy: Relative Path"))
+
+	vim.keymap.set("n", "?", api.tree.toggle_help, opts("Help"))
 end
 
 -- Git status colors
@@ -43,7 +67,7 @@ require("nvim-tree").setup({
 	on_attach = on_attach,
 	hijack_cursor = false,
 	auto_reload_on_write = true,
-	disable_netrw = false,
+	disable_netrw = true,
 	hijack_netrw = true,
 	hijack_unnamed_buffer_when_opening = false,
 	root_dirs = {},
@@ -324,7 +348,19 @@ vim.api.nvim_create_autocmd("VimEnter", {
 })
 
 -- File explorer
-vim.keymap.set("n", "<leader>n", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
+vim.keymap.set(
+	"n",
+	"<leader>n",
+	":NvimTreeToggle<CR>",
+	{ noremap = true, silent = true, desc = "Toggle File Explorer" }
+)
 
--- Collapse file explorer
-vim.keymap.set("n", "<C-n>", ":NvimTreeCollapse<CR>", { noremap = true, silent = true })
+-- Find file in file explorer
+vim.keymap.set(
+	"n",
+	"<leader>F",
+	":NvimTreeFindFile<CR>",
+	{ noremap = true, silent = true, desc = "Find File in File Explorer" }
+)
+
+vim.keymap.set("n", "<C-n>", ":NvimTreeFocus<CR>", { noremap = true, silent = true, desc = "Focus on File Explorer" })

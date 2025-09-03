@@ -11,15 +11,6 @@ require("nvim-treesitter.configs").setup({
 	indent = {
 		enable = true,
 	},
-	incremental_selection = {
-		enable = true,
-		keymaps = {
-			init_selection = "gnn", -- Start selection
-			node_incremental = "grn", -- Increment to the upper node
-			scope_incremental = "grc", -- Increment scope
-			node_decremental = "grm", -- Decrement node
-		},
-	},
 })
 
 -- Treesitter folding

@@ -5,47 +5,44 @@ set statusline=%F%m%r%h%w\ %{fugitive#statusline()}
 hi StatusLine                  ctermfg=16     ctermbg=255     cterm=NONE
 hi StatusLineNC                ctermfg=59     ctermbg=250     cterm=NONE
 
-" Fugitive window
-nnoremap <leader>g :Git<CR>
+lua << EOF
+-- Fugitive main window
+vim.keymap.set("n", "<C-g>", ":Git<CR>", { noremap = true, silent = true, desc = "Open Fugitive main window" })
 
-" Push and pull
-nnoremap <leader>gp :Git push<CR>
-nnoremap <leader>gl :Git pull<CR>
+-- Push and Pull
+vim.keymap.set("n", "<leader>gp", ":Git push<CR>", { noremap = true, silent = true, desc = "Git push" })
+vim.keymap.set("n", "<leader>gl", ":Git pull<CR>", { noremap = true, silent = true, desc = "Git pull" })
 
-" Git add
-nnoremap <leader>ga :Git add %<CR>
+-- Git add current file
+vim.keymap.set("n", "<leader>ga", ":Git add %<CR>", { noremap = true, silent = true, desc = "Git add current file" })
 
-" Git log for repo
-nnoremap <leader>glg :Git log<CR>
+-- Git log
+vim.keymap.set("n", "<leader>glg", ":Git log<CR>", { noremap = true, silent = true, desc = "Git log" })
 
-" Diff current file against index
-nnoremap <leader>gd :Gvdiffsplit<CR>
+-- Diff against index
+vim.keymap.set("n", "<leader>gd", ":Gvdiffsplit<CR>", { noremap = true, silent = true, desc = "Git diff" })
 
-" Diff current file against HEAD (staged files)
-nnoremap <leader>gds :Gvdiffsplit HEAD<CR>
+-- Diff against HEAD (staged)
+vim.keymap.set("n", "<leader>gds", ":Gvdiffsplit HEAD<CR>", { noremap = true, silent = true, desc = "Git diff (staged)" })
 
-" Git blame for current file
-nnoremap <leader>gb :Git blame<CR>
+-- Blame current file
+vim.keymap.set("n", "<leader>gb", ":Git blame<CR>", { noremap = true, silent = true, desc = "Git blame" })
 
-" Commit
-nnoremap <leader>gc :Git commit<CR>
-nnoremap <leader>gc :Git commit --amend<CR>
+-- Commit
+vim.keymap.set("n", "<leader>gc", ":Git commit<CR>", { noremap = true, silent = true, desc = "Git commit" })
+vim.keymap.set("n", "<leader>gca", ":Git commit --amend<CR>", { noremap = true, silent = true, desc = "Git commit --amend" })
 
-" Checkout branches
-nnoremap <leader>gco :Git checkout<Space>
+-- Checkout branch
+vim.keymap.set("n", "<leader>gco", ":Git checkout ", { noremap = true, silent = false, desc = "Git checkout" })
 
-" If you hit a merge conflict, this helps resolve it visually
-nnoremap <leader>gm :Gvdiffsplit!<CR>
+-- Merge conflict resolution (force diffsplit)
+vim.keymap.set("n", "<leader>gm", ":Gvdiffsplit!<CR>", { noremap = true, silent = true, desc = "Resolve merge conflict visually" })
+EOF
 
 " Git commit message formatting
 autocmd Filetype gitcommit setlocal spell
 
 " --- vim-gitgutter ---
-
-" Stage hunk
-nnoremap <leader>ggs :GitGutterStageHunk<CR>
-nnoremap <leader>ggu :GitGutterUndoHunk<CR>
-
 highlight GitGutterAdd    guifg=#009900 ctermfg=2
 highlight GitGutterChange guifg=#bbbb00 ctermfg=3
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1

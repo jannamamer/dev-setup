@@ -10,10 +10,10 @@ end
 vim.env.FZF_DEFAULT_COMMAND = 'rg --files --hidden --glob "!.git/*" ' .. table.concat(dependency_directories)
 
 -- Find files
-vim.keymap.set("n", "<leader>p", ":Files<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>p", ":Files<CR>", { noremap = true, silent = true, desc = "Find files" })
 
 -- Git status
-vim.keymap.set("n", "<leader>gs", ":GFiles?<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>gs", ":GFiles?<CR>", { noremap = true, silent = true, desc = "Show updated files" })
 
 -- Find string (ripgrep required)
-vim.keymap.set("n", "<leader>f", ":RG<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>f", ":RG<CR>", { noremap = true, silent = true, desc = "Find string" })
