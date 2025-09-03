@@ -4,8 +4,8 @@
 
 " Ale settings
 let g:ale_fixers = {
- \ 'javascript': ['eslint', 'prettier']
+ \ 'javascript': ['prettier', 'eslint']
  \ }
 let g:ale_linters = {
- \ 'javascript': ['eslint', 'prettier']
+ \ 'javascript': ['prettier', 'eslint', 'flow']
  \ }

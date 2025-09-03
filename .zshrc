@@ -1,5 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/bin:$PATH"
 
 # Path to your oh-my-zsh installation.
 export ZSH="[path_to_directory]/.oh-my-zsh"
@@ -73,7 +75,6 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -88,32 +89,64 @@ source $ZSH/oh-my-zsh.sh
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
-#
+
 # Git aliases
 alias gs="git status --porcelain"
 alias gl="git pull"
 alias gp="git push"
-alias go="git checkout"
+alias gco="git checkout"
 alias ga="git add"
 alias gc="git commit"
 alias gd="git diff"
-alias gh="git log"
+alias gh="git glow"
+alias gr='git rebase'
+alias gb='git branch'
 
 # Ruby cofiguration
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
-set py = "python3"
+# Vim
 set vi = "/usr/local/bin/vim"
 set vim = "/usr/local/bin/vim"
 
-# Comment out if you're not using asdf
+# Asdf
 . /usr/local/opt/asdf/asdf.sh
 
-export PATH="/usr/local/sbin:$PATH"
-
-# Comment out if you're not using aws-tools (https://github.com/camfowler/aws-tools)
+# AWS
 export PATH="$PATH:$HOME/src/aws-tools/bin"
+
+aws-login-wo-email() {
+  $(aws ecr get-login --no-include-email --region ap-southeast-2)
+}
 
 # Docker aliases
 alias dc=docker-compose
+
+# Elixir
+mix-credo() {
+  updated_files=$(git status --porcelain)
+
+  if [ ! -z "$updated_files" ]
+  then
+      echo 1
+      files=""
+
+      while IFS= read -r file
+      do
+          files="$files ${file:3}"
+      done <<< "$updated_files"
+
+      $(docker-compose run web mix credo --strict ${files})
+  fi
+}
+
+# For MySQL
+# export LDFLAGS="-L/usr/local/opt/openssl/lib"
+# export CPPFLAGS="-I/usr/local/opt/openssl/include"
+
+# MariaDB
+export PATH="/usr/local/opt/mariadb@10.3/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/mariadb@10.3/lib"
+export CPPFLAGS="-I/usr/local/opt/mariadb@10.3/include"
+export PKG_CONFIG_PATH="/usr/local/opt/mariadb@10.3/lib/pkgconfig"
