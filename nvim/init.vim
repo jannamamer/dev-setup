@@ -210,4 +210,3 @@ let g:NERDToggleCheckAllLines = 1
 
 " Format JSON
 nnoremap <leader>jf :%!jq '.'<CR>
-

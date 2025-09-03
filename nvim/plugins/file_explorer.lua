@@ -311,11 +311,14 @@ require("nvim-tree").setup({
 })
 
 -- Open file in new tab unless current buffer is nvim-tree
+local startup_page = require("utils.startup_page")
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function(data)
 		local directory = vim.fn.isdirectory(data.file) == 1
 		if directory or data.file == "" then
 			require("nvim-tree.api").tree.open()
+			vim.api.nvim_command("wincmd w")
+			startup_page.create()
 		end
 	end,
 })
