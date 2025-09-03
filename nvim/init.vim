@@ -182,27 +182,7 @@ luafile ~/.config/nvim/plugins/linters.lua
 luafile ~/.config/nvim/plugins/key_finder.lua
 
 " --- nerdcommenter ---
-
-" Toggle comment normal mode
-nnoremap kc <Plug>NERDCommenterToggle
-
-" Toggle comment visual mode
-vnoremap kc <Plug>NERDCommenterToggle
-
-" Uncomment normal mode
-nnoremap ku <Plug>NERDCommenterUncomment
-
-" Uncomment visual mode
-vnoremap ku <Plug>NERDCommenterUncomment
-
-" Unmap default mappings
-let g:NERDCreateDefaultMappings = 0
-
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-
-" Enable NERDCommenterToggle to check all selected lines is commented or not 
-let g:NERDToggleCheckAllLines = 1
+source ~/.config/nvim/plugins/commenter.vim
 
 " --- jq ---
 lua << EOF
