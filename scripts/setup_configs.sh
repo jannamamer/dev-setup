@@ -33,5 +33,6 @@ echo "✅ ftplugin folder copied..."
 echo "Copying nvim configuration file..."
 cp ./nvim/init.vim ~/.config/nvim/init.vim
 nvim +PlugInstall +qall
+nvim +TSUpdate +qall
 
 echo "✅ Vim config deployed."
