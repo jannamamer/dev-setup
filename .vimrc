@@ -10,17 +10,16 @@ Plugin 'preservim/nerdcommenter'
 Plugin 'tpope/vim-surround'
 Plugin 'majutsushi/tagbar'
 Plugin 'townk/vim-autoclose'
-Plugin 'scrooloose/syntastic'
 Plugin 'nvie/vim-flake8'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'docunext/closetag.vim'
 Plugin 'wincent/command-t'
 Plugin 'slashmili/alchemist.vim'
 Plugin 'OmniSharp/omnisharp-vim'
-Plugin 'mhinz/vim-mix-format'
 Plugin 'elixir-editors/vim-elixir' 
+Plugin 'w0rp/ale'
 Plugin 'tpope/vim-endwise'
-Plugin 'aserebryakov/vim-todo-lists'
+Plugin 'tpope/vim-fugitive'
 call vundle#end()
 
 " Set compatibility to Vim only.
@@ -34,16 +33,17 @@ set modelines=0
 
 " Automatically wrap text that extends beyond the screen length.
 set wrap
+
 " Vim's auto indentation feature does not work properly with text copied from outside of Vim. Press the <F2> key to toggle paste mode on/off.
 nnoremap <F2> :set invpaste paste?<CR>
 imap <F2> <C-O>:set invpaste paste?<CR>
 set pastetoggle=<F2>
 
-set textwidth=79
+set textwidth=100
 set expandtab
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 set noshiftround
 set autoindent
 set number
@@ -51,6 +51,7 @@ set cursorline
 
 " Display 5 lines above/below the cursor when scrolling with a mouse.
 set scrolloff=5
+
 " Fixes common backspace problems
 set backspace=indent,eol,start
 
@@ -69,8 +70,9 @@ set showmatch " Show matching brackets
 set matchpairs+=<:>
 
 " Set status line display
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ [BUFFER=%n]\ %{strftime('%c')}
-"set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+set statusline=%F%m%r%h%w
+hi StatusLine                  ctermfg=16     ctermbg=255     cterm=NONE
+hi StatusLineNC                ctermfg=59     ctermbg=250     cterm=NONE
 
 " Encoding
 set encoding=utf-8
@@ -88,25 +90,16 @@ set clipboard=unnamed
 
 set title
 
-" Syntastic settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" Ale settings
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+highlight ALEErrorSign ctermbg=NONE ctermfg=red
+highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+let g:ale_lint_on_save = 1
+let g:ale_fix_on_save = 1
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-" let g:syntastic_debug = 3
-let g:syntastic_python_checkers=['flake8']
-let g:syntastic_enable_elixir_checker = 1
-
-" Mix format settings
-let g:mix_format_on_save = 1
-let g:mix_format_options = '--check-equivalent'
-
-" Enable all Python syntax highlighting features
-let python_highlight_all=1
+nnoremap ]r :ALENextWrap<CR>
+nnoremap [r :ALEPreviousWrap<CR>
 
 " Mapped tab for completion suggestion
 inoremap <expr> <Tab> pumvisible() ? '<C-n>' :
@@ -124,45 +117,42 @@ let NERDTreeShowHidden=1
 
 let mapleader=" "
 
-" Open/Close NERDTree
+" NERDTree settings
 map <leader>n :NERDTreeToggle<CR>
+set wildignore+=deps,_build,bin,node_modules
 " Open Tagbar Window
 nmap <F8> :TagbarToggle<CR>
 
 " Remap Esc with jj
 imap jj <Esc>
-" Sav Window
-map ss :w<cr>
+
+" Save Window
+map ss :w <cr>
+map sa :w! <cr>
+
 " Exit Window
 map qq :q <cr>
 map qa :q! <cr>
-" Map the source to leader so
-" map <leader>so :so %<cr>
+
 " Map suspend
 map <leader>z <C-Z>
-" Tab Mappings
-map <leader>tt :tabnew<cr>
-map <leader>te :tabedit
-map <leader>tc :tabclose<cr>
-map <leader>to :tabonly<cr>
-map <leader>tn :tabnext<cr>
-map <leader>tp :tabprevious<cr>
-map <leader>tf :tabfirst<cr>
-map <leader>tl :tablast<cr>
-map <leader>tm :tabmov
+
 " Windows Mappings
 map <leader>mv :vsplit <cr>
 map <leader>ms :split <cr>
-map <C-H> <C-W>h <cr>
-map <C-J> <C-W>j <cr>
-map <C-K> <C-W>k <cr>
+map <C-J> <C-W>h <cr>
+map <C-K> <C-W>j <cr>
+map <C-I> <C-W>k <cr>
 map <C-L> <C-W>l <cr>
+map <C-O> <C-W>i <cr>
+
 " Navigate splits
 nmap <tab> <c-w>w
+
 " Open files
 map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
 
-autocm Filetype gitcommit setlocal spell
+" Format json
+map <leader>jf :%!jq '.' <cr>
 
-" let $RUBYHOME=$HOME."/.rvm/rubies/default"
-" set rubydll=$RUBYHOME/lib/libruby.dylib
+autocm Filetype gitcommit setlocal spell
