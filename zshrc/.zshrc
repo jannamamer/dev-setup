@@ -24,5 +24,5 @@ autoload -Uz compinit && compinit
 zstyle ':omz:alpha:lib:git' async-prompt no
 
 # Set default editor
-# export VISUAL=code
-# export EDITOR="$VISUAL"
+export VISUAL=nvim
+export EDITOR="$VISUAL"

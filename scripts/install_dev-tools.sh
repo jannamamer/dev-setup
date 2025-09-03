@@ -5,13 +5,13 @@ source config.env
 
 echo "Installing Git Platform CLI..."
 if [ "$GIT_PLATFORM" = "github" ]; then
-    echo "Installing GitHub CLI..."
-    brew install gh
-    echo "✅ GitHub CLI installed..."
+  echo "Installing GitHub CLI..."
+  brew install gh
+  echo "✅ GitHub CLI installed..."
 elif [ "$GIT_PLATFORM" = "gitlab" ]; then
-    echo "Installing GitLab CLI..."
-    brew install glab
-    echo "✅ GitLab CLI installed..."
+  echo "Installing GitLab CLI..."
+  brew install glab
+  echo "✅ GitLab CLI installed..."
 else
   echo "ℹ️ Unsupported Git Platform..."
 fi
@@ -33,3 +33,11 @@ if [ "$KUBERNETES_ENABLED" = "true" ]; then
   brew bundle --file="$PWD/brewfiles/Brewfile.kube"
   echo "✅ Kubernetes packages installed..."
 fi
+
+IFS=','
+read -ra tech_stack <<<"$TECH_STACK"
+for stack in "${tech_stack[@]}"; do
+  echo "Installing $stack packages..."
+  # brew bundle --file="$PWD/brewfiles/Brewfile.$stack"
+  echo "✅ $stack packages installed..."
+done

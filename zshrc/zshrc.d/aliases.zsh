@@ -1,3 +1,8 @@
+# Neovim
+alias vim='nvim'
+alias vi='nvim'
+alias v='nvim'
+
 # Git shortcuts
 alias gs="git status --porcelain"
 alias gl="git pull"
@@ -9,4 +14,6 @@ alias gr='git rebase'
 alias dc=docker compose
 
 # For MacOS only
-# alias kape="caffeinate -d"
+if [[ "$(uname)" == "Darwin" ]]; then
+  alias kape="caffeinate -d"
+fi

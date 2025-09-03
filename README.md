@@ -8,7 +8,9 @@ cd dev-setup-main
 
 # TODO:
 * Update README
+    * Add commands
 * Cleanup command in .vimrc
 * check plugins on vim and zshrc
 * add vscode settings, must be same with the vim formatting
 * tools for devops e.g. terraform
+* Close window automatically if vim-tree is closed and no buffers open

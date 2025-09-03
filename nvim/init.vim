@@ -1,33 +1,42 @@
 " Leader Key
 let mapleader=" "
 
+" Disable netrw (recommended by nvim-tree)
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1
+
 " ========================================
 " Plugin Manager: vim-plug
 " ========================================
 call plug#begin()
-  " Files Plugins
-  Plug 'junegunn/fzf'
-  Plug 'preservim/nerdtree'
-  Plug 'junegunn/fzf.vim'
+  " Plugin manager (for updates)
+  Plug 'junegunn/vim-plug'
 
-  " Format Plugins
-  Plug 'preservim/nerdcommenter'
+  " File finder and navigation
+  Plug 'junegunn/fzf'
+  Plug 'junegunn/fzf.vim'
+  Plug 'nvim-tree/nvim-tree.lua'
 
   " Git Plugins
   Plug 'airblade/vim-gitgutter'   
   Plug 'tpope/vim-fugitive'
+
+  " Text editing helpers
+  Plug 'preservim/nerdcommenter'
+
+  " Formatting, Linting, Syntax highlighting
+  Plug 'stevearc/conform.nvim'
+  Plug 'mfussenegger/nvim-lint'
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 " Enable filetype detection and plugins
 filetype plugin indent on
-syntax on
+syntax off
 
 " ========================================
 " General Settings
 " ========================================
-
-" Disables Vi compatibility mode and enables all Vim features
-set nocompatible
 
 " Sets the internal character encoding
 set encoding=utf-8
@@ -48,7 +57,7 @@ set wrap
 set scrolloff=5
 
 " Use the system clipboard for copy/paste.
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 " Updates the terminal window title with the current file name
 set title
@@ -59,8 +68,11 @@ set mouse=a
 " Speed up scrolling in Vim
 set ttyfast
 
-" Open vsplit to the right of the current window
-set splitright
+" Enable true color support
+set termguicolors
+
+" Use terminal-aware colorscheme
+colorscheme pablo
 
 " Text Width
 set textwidth=100
@@ -107,9 +119,6 @@ set laststatus=2
 " Fixes common backspace problems
 set backspace=indent,eol,start 
 
-" Ignore patterns for completion
-set wildignore+=deps,_build,node_modules,tmp
-
 " ========================================
 " Mappings
 " ========================================
@@ -117,7 +126,6 @@ set wildignore+=deps,_build,node_modules,tmp
 " Auto indentation feature does not work properly with text copied from outside of Vim. Press the <F2> key to toggle paste mode on/off.
 nnoremap <F2> :set invpaste paste?<CR>
 imap <F2> <C-O>:set invpaste paste?<CR>
-set pastetoggle=<F2>
 
 " Escape insert mode
 imap jj <Esc> 
@@ -136,7 +144,7 @@ nnoremap <C-K> <C-W>j
 nnoremap <C-I> <C-W>k
 nnoremap <C-L> <C-W>l
 nnoremap <C-O> <C-W>i
-nmap <tab> <C-W>w
+nnoremap <Tab> <C-w>w
 
 " Suspend Vim
 nnoremap <leader>z <C-Z>
@@ -152,18 +160,28 @@ inoremap <expr> <Tab> pumvisible() ? '<C-n>' :
 " Plugin Configurations
 " ========================================
 
-" --- nerdtree ---
+" Load environment variables
+lua << EOF
+package.path = package.path .. ";" .. vim.fn.stdpath('config') .. "/plugins/?.lua"
+EOF
 
-" File browser
-nnoremap <leader>n :NERDTreeToggle<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
+" --- vim-gitgutter / vim-fugitive ---
+source ~/.config/nvim/plugins/git.vim
 
-" Show hidden files
-let NERDTreeShowHidden = 1
+" --- nvim-tree.lua ---
+luafile ~/.config/nvim/plugins/file_explorer.lua
 
-" Start NERDTree and leave the cursor in it.
-autocmd VimEnter * NERDTree
+" --- fzf ---
+luafile ~/.config/nvim/plugins/file_finder.lua
+
+" --- conform.nvim ---
+luafile ~/.config/nvim/plugins/formatters.lua
+
+" --- nvim-treesitter ---
+luafile ~/.config/nvim/plugins/parsers.lua
+
+" --- nvim-lint ---
+luafile ~/.config/nvim/plugins/linters.lua
 
 " --- nerdcommenter ---
 
@@ -188,64 +206,8 @@ let g:NERDSpaceDelims = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not 
 let g:NERDToggleCheckAllLines = 1
 
-" --- fzf ---
-
-" Redefine Files to open in new tab
-command! Files call fzf#vim#files('', {'sink': 'vsplit'})
-
-" Find files
-nnoremap <leader>p :Files<CR>
-
-" Find string (ripgrep required)
-nnoremap <leader>f :Rg<Space>
-
 " --- jq ---
 
 " Format JSON
 nnoremap <leader>jf :%!jq '.'<CR>
 
-" --- vim-fugitive ---
-
-" Set status line display
-set statusline=%F%m%r%h%w\ %{fugitive#statusline()}
-hi StatusLine                  ctermfg=16     ctermbg=255     cterm=NONE
-hi StatusLineNC                ctermfg=59     ctermbg=250     cterm=NONE
-
-" Git status
-nnoremap <leader>gs :Git<CR>
-
-" Push and pull
-nnoremap <leader>gp :Git push<CR>
-nnoremap <leader>gl :Git pull<CR>
-
-" Git add
-nnoremap <leader>ga :Git add<CR>
-
-" Git log for repo
-nnoremap <leader>glg :Git log<CR>
-
-" Diff current file against index
-nnoremap <leader>gd :Gvdiffsplit<CR>
-
-" Git blame for current file
-nnoremap <leader>gb :Git blame<CR>
-
-" Commit
-nnoremap <leader>gc :Git commit<CR>
-nnoremap <leader>gcf :Git commit cf<CR>
-
-" Checkout branches
-nnoremap <leader>gco :Git checkout<Space>
-
-" If you hit a merge conflict, this helps resolve it visually
-nnoremap <leader>gm :Gvdiffsplit!<CR>
-
-" Git commit message formatting
-autocm Filetype gitcommit setlocal spell
-
-" --- vim-gitgutter ---
-
-" GitGutter settings
-highlight GitGutterAdd    guifg=#009900 ctermfg=2
-highlight GitGutterChange guifg=#bbbb00 ctermfg=3
-highlight GitGutterDelete guifg=#ff2222 ctermfg=1

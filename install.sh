@@ -14,8 +14,8 @@ echo "Installing packages via Homebrew..."
 brew bundle --file="$PWD/brewfiles/Brewfile.base"
 echo "✅ Homebrew packages installed..."
 
-echo "Setting up dotfiles..."
-./scripts/setup_dotfiles.sh
+echo "Setting up configs..."
+./scripts/setup_configs.sh
 
 echo "Installing Dev Tools..."
 ./scripts/install_dev-tools.sh
