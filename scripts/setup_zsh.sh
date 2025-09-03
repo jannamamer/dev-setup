@@ -19,6 +19,13 @@ echo "Copying custom theme..."
 cp ./zshrc/custom-af-magic.zsh-theme ~/.oh-my-zsh/custom/themes/custom-af-magic.zsh-theme
 echo "✅ Custom theme copied..."
 
+echo "Clone zsh external plugins..."
+if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting ]; then
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
+    ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+fi
+echo "✅ Zsh external plugins cloned..."
+
 echo "Copying Zsh configuration file..."
 cp ./zshrc/.zshrc ~/.zshrc
 echo "✅ Zsh configuration file copied."
