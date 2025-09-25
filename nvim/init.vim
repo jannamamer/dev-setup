@@ -129,6 +129,7 @@ set backspace=indent,eol,start
 lua << EOF
 vim.keymap.set("i", "hh", "<Esc>", { noremap = true, silent = true, desc = "Escape (Insert Mode)" })
 vim.keymap.set("n", "<leader>z", "<C-Z>", { noremap = true, silent = true, desc = "Suspend Vim" })
+vim.keymap.set("n", "<leader>N", ":vsplit | enew<CR>", { noremap = true, silent = true, desc = "New Empty Buffer" })
 
 -- Save / Quit
 vim.keymap.set("n", "ss", ":w<CR>", { noremap = true, silent = true, desc = "Save File" })
