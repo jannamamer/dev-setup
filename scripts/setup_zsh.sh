@@ -10,7 +10,7 @@ echo "Installing oh-my-zsh..."
 if [ -d ~/.oh-my-zsh ]; then
   echo "✅ oh-my-zsh already installed ..."
 else
-   export RUNZSH=no
+  export RUNZSH=no
   /usr/bin/env bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   echo "✅ oh-my-zsh successfully installed..."
 fi
@@ -29,3 +29,5 @@ echo "✅ Zsh external plugins cloned..."
 echo "Copying Zsh configuration file..."
 cp ./zshrc/.zshrc ~/.zshrc
 echo "✅ Zsh configuration file copied."
+
+source ~/.zshrc

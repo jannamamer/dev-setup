@@ -1,0 +1,3 @@
+brew "checkov"
+brew "tflint"
+brew "tfsec"

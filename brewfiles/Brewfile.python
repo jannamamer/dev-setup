@@ -1,0 +1,5 @@
+brew "black"
+brew "isort"
+brew "bandit"
+brew "ruff"
+brew "mypy"

@@ -1,2 +1,6 @@
+brew "checkov"
 brew "docker"
 brew "dive"
+brew "hadolint"
+
+cask "docker"

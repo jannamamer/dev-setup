@@ -2,6 +2,11 @@ local config = require("utils.config")
 local env = config.get_env()
 
 local parsers = (env.GENERAL_PARSERS or "") .. "," .. (env.TECH_STACK or "")
+
+if env.DOCKER_ENABLED == "true" then
+	parsers = parsers .. "," .. "dockerfile"
+end
+
 require("nvim-treesitter.configs").setup({
 	ensure_installed = vim.split(parsers, ","),
 	highlight = {
@@ -17,3 +22,5 @@ require("nvim-treesitter.configs").setup({
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldenable = false -- Don't fold by default when opening a file
+
+vim.treesitter.language.register("bash", "zsh")
