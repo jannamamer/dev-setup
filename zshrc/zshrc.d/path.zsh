@@ -5,6 +5,16 @@ export PATH="$HOME/.local/bin:$PATH"
 if command -v brew >/dev/null 2>&1; then
   export BREW_PREFIX="$(brew --prefix)"
   export PATH="$BREW_PREFIX/bin:$BREW_PREFIX/sbin:$PATH"
+
+  # Postgres setup
+  export OPENSSL_DIR=$(brew --prefix openssl@3)
+  export LDFLAGS="-L$OPENSSL_DIR/lib"
+  export CPPFLAG="-I$OPENSSL_DIR/include"
+  export PKG_CONFIG_PATH="$OPENSSL_DIR/lib/pkgconfig"
+  export POSTGRES_CONFIGURE_OPTIONS="--with-uuid=e2fs --with-openssl --with-libraries=$OPENSSL_DIR/lib --with-includes=$OPENSSL_DIR/include"
+
+  export PATH="/opt/homebrew/opt/icu4c/bin:$PATH"
+  export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/opt/homebrew/opt/icu4c/lib/pkgconfig"
 fi
 
 # System sbin directories (for admin/system tools)

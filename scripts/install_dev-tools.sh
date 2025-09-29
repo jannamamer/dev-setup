@@ -63,3 +63,17 @@ if [[ $TECH_STACK == *"ruby"* ]]; then
   gem install rubocop
   echo "✅ ruby packages installed via gem..." && echo
 fi
+
+read -ra databases <<<"$DATABASES"
+for db in "${databases[@]}"; do
+  echo "Installing $db prerequisites..."
+  brew bundle --file="$PWD/brewfiles/Brewfile.$db"
+  echo "✅ $db prerequisites installed..." && echo
+
+  echo "Installing $db..."
+  asdf plugin add "$db"
+  latest=$(asdf list all "$db" | grep -E '^[0-9]+(\.[0-9]+){0,2}$' | tail -1)
+  asdf install "$db" "$latest"
+  asdf set --home "$db" "$latest"
+  echo "✅ $db installed..." && echo
+done
