@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 set -eu
 
 source ./scripts/colors.sh
@@ -8,8 +9,8 @@ KEY_PATH="$HOME/.ssh/git_ssh_key"
 if git config --global user.name &>/dev/null; then
   echo "✅ Git is already configured..."
 else
-  read -p "Enter your full name: " full_name
-  read -p "Enter your email address: " email
+  read -r -p "Enter your full name: " full_name
+  read -r -p "Enter your email address: " email
 
   # Check if GPG key exist for the email
   echo "Generating GPG key for signing..."
@@ -43,7 +44,7 @@ else
   git config --global pull.rebase false
   git config --global core.editor "nvim"
 
-  git config --global user.signingkey $gpg_key_id
+  git config --global user.signingkey "$gpg_key_id"
   git config --global commit.gpgsign true
   git config --global tag.gpgSign true
 

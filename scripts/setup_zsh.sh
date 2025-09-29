@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 set -eu
 
 echo "Copying modular configs folder..."
@@ -20,9 +21,9 @@ cp ./zshrc/custom-af-magic.zsh-theme ~/.oh-my-zsh/custom/themes/custom-af-magic.
 echo "✅ Custom theme copied..."
 
 echo "Clone zsh external plugins..."
-if [ ! -d ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting ]; then
+if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]; then
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-    ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
 fi
 echo "✅ Zsh external plugins cloned..."
 
@@ -30,4 +31,4 @@ echo "Copying Zsh configuration file..."
 cp ./zshrc/.zshrc ~/.zshrc
 echo "✅ Zsh configuration file copied."
 
-source ~/.zshrc
+source "$HOME/.zshrc"

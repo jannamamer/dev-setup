@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 set -eu
 
 source ./scripts/colors.sh

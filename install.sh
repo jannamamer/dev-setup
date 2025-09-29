@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Usage: install.sh <git_platform>
+
 set -eu
 
 source ./scripts/colors.sh

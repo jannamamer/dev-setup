@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 set -eu
 
 echo "Setting up env variables..."
@@ -6,7 +7,7 @@ cp ./config.env ~/.config.env
 echo "✅ env variables deployed..."
 
 echo "Downloading vim-plug..."
-if [ -f $HOME/.config/nvim/autoload/plug.vim ]; then
+if [ -f "$HOME"/.config/nvim/autoload/plug.vim ]; then
   echo "✅ vim-plug already downloaded..."
 else
   curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
