@@ -27,7 +27,7 @@ PS2="%{$fg[red]%}\ %{$reset_color%}"
 
 # right prompt: return code, virtualenv and context (user@host)
 RPS1="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
-if (($ + functions[virtualenv_prompt_info])); then
+if (($+functions[virtualenv_prompt_info])); then
   RPS1+='$(virtualenv_prompt_info)'
 fi
 RPS1+=" ${FG[237]}%n@%m%{$reset_color%} at %D{%a, %b %d, %H:%M:%S}"
