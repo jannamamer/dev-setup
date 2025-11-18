@@ -183,7 +183,7 @@ luafile ~/.config/nvim/plugins/linters.lua
 luafile ~/.config/nvim/plugins/key_finder.lua
 
 " --- nerdcommenter ---
-source ~/.config/nvim/plugins/commenter.vim
+source ~/.config/nvim/plugins/commenter.lua
 
 " --- jq ---
 lua << EOF

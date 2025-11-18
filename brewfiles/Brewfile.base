@@ -30,6 +30,7 @@ brew "stylelint"
 brew "stylua"
 brew "yamllint"
 
+cask "docker"
 cask "iterm2"
 cask "rectangle"
 cask "visual-studio-code"
