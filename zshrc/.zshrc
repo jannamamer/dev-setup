@@ -29,3 +29,5 @@ zstyle ':omz:alpha:lib:git' async-prompt no
 # Set default editor
 export VISUAL=nvim
 export EDITOR="$VISUAL"
+
+export GPG_TTY=$(tty)
