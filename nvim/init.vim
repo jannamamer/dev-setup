@@ -1,3 +1,10 @@
+" Load environment variables
+lua << EOF
+package.path = package.path .. ";" .. vim.fn.stdpath('config') .. "/plugins/?.lua"
+EOF
+
+let g:env = luaeval("require('utils.config').get_env()")
+
 " Leader Key
 let mapleader=" "
 
@@ -21,16 +28,18 @@ call plug#begin()
   Plug 'nvim-tree/nvim-tree.lua'
 
   " Git Plugins
-  Plug 'airblade/vim-gitgutter'   
+  Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
 
   " Text editing helpers
   Plug 'preservim/nerdcommenter'
 
   " Formatting, Linting, Syntax highlighting
-  Plug 'stevearc/conform.nvim'
-  Plug 'mfussenegger/nvim-lint'
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  if g:env.VIM_CODE_TOOLS == "true"
+    Plug 'stevearc/conform.nvim'
+    Plug 'mfussenegger/nvim-lint'
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  endif
 call plug#end()
 
 " Enable filetype detection and plugins
@@ -156,11 +165,6 @@ EOF
 " Plugin Configurations
 " ========================================
 
-" Load environment variables
-lua << EOF
-package.path = package.path .. ";" .. vim.fn.stdpath('config') .. "/plugins/?.lua"
-EOF
-
 " --- vim-gitgutter / vim-fugitive ---
 source ~/.config/nvim/plugins/git.vim
 
@@ -170,14 +174,16 @@ luafile ~/.config/nvim/plugins/file_explorer.lua
 " --- fzf ---
 luafile ~/.config/nvim/plugins/file_finder.lua
 
-" --- conform.nvim ---
-luafile ~/.config/nvim/plugins/formatters.lua
+if g:env.VIM_CODE_TOOLS == "true"
+  " --- conform.nvim ---
+  luafile ~/.config/nvim/plugins/formatters.lua
 
-" --- nvim-treesitter ---
-luafile ~/.config/nvim/plugins/parsers.lua
+  " --- nvim-treesitter ---
+  luafile ~/.config/nvim/plugins/parsers.lua
 
-" --- nvim-lint ---
-luafile ~/.config/nvim/plugins/linters.lua
+  " --- nvim-lint ---
+  luafile ~/.config/nvim/plugins/linters.lua
+endif
 
 " --- which-key.nvim ---
 luafile ~/.config/nvim/plugins/key_finder.lua
