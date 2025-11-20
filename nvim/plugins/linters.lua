@@ -1,17 +1,17 @@
 local config = require("utils.config")
 local env = config.get_env()
 local linters = {
-	general = env.GENERAL_LINTERS or "",
+	general = env.VIM_LINTERS or "",
 }
 
 -- Load tech stack specific linters
 for _, stack in ipairs(vim.split(env.TECH_STACK, ",")) do
-	local env_key = string.upper(stack) .. "_LINTERS"
+	local env_key = "VIM_" .. string.upper(stack) .. "_LINTERS"
 	linters[stack] = env[env_key]
 end
 
 if env.DOCKER_ENABLED == "true" then
-	linters["dockerfile"] = env["DOCKERFILE_LINTERS"]
+	linters["dockerfile"] = env["VIM_DOCKERFILE_LINTERS"]
 end
 
 local linters_by_ft = {}

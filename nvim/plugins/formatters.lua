@@ -1,12 +1,12 @@
 local config = require("utils.config")
 local env = config.get_env()
 local formatters = {
-	general = env.GENERAL_FORMATTERS or "",
+	general = env.VIM_FORMATTERS or "",
 }
 
 -- Load tech stack specific formatters
 for _, stack in ipairs(vim.split(env.TECH_STACK, ",")) do
-	local env_key = string.upper(stack) .. "_FORMATTERS"
+	local env_key = "VIM_" .. string.upper(stack) .. "_FORMATTERS"
 	formatters[stack] = env[env_key]
 end
 
@@ -15,7 +15,7 @@ if env.AZURE_ENABLED == "true" then
 end
 
 if env.DOCKER_ENABLED == "true" then
-	formatters["dockerfile"] = env["DOCKERFILE_FORMATTERS"]
+	formatters["dockerfile"] = env["VIM_DOCKERFILE_FORMATTERS"]
 end
 
 local formatters_by_ft = {}

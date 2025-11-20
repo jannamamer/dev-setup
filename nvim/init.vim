@@ -35,7 +35,7 @@ call plug#begin()
   Plug 'preservim/nerdcommenter'
 
   " Formatting, Linting, Syntax highlighting
-  if g:env.VIM_CODE_TOOLS == "true"
+  if g:env.VIM_TOOLS == "true"
     Plug 'stevearc/conform.nvim'
     Plug 'mfussenegger/nvim-lint'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -174,7 +174,7 @@ luafile ~/.config/nvim/plugins/file_explorer.lua
 " --- fzf ---
 luafile ~/.config/nvim/plugins/file_finder.lua
 
-if g:env.VIM_CODE_TOOLS == "true"
+if g:env.VIM_TOOLS == "true"
   " --- conform.nvim ---
   luafile ~/.config/nvim/plugins/formatters.lua
 

@@ -5,7 +5,7 @@ if string.find(env.TECH_STACK, "dotnet") then
   env.TECH_STACK = string.gsub(env.TECH_STACK, "dotnet", "c_sharp")
 end
 
-local parsers = (env.GENERAL_PARSERS or "") .. "," .. (env.TECH_STACK or "")
+local parsers = (env.VIM_PARSERS or "") .. "," .. (env.TECH_STACK or "")
 
 if env.DOCKER_ENABLED == "true" then
 	parsers = parsers .. "," .. "dockerfile"
