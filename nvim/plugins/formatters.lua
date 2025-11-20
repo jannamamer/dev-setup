@@ -10,6 +10,10 @@ for _, stack in ipairs(vim.split(env.TECH_STACK, ",")) do
 	formatters[stack] = env[env_key]
 end
 
+if env.AZURE_ENABLED == "true" then
+	formatters["bicep"] = "bicep=bicep"
+end
+
 if env.DOCKER_ENABLED == "true" then
 	formatters["dockerfile"] = env["DOCKERFILE_FORMATTERS"]
 end

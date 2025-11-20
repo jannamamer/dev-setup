@@ -21,6 +21,7 @@ install_asdf() {
 
 install_brew "$GIT_PLATFORM"
 [ "$AWS_ENABLED" = "true" ] && install_brew "aws"
+[ "$AZURE_ENABLED" = "true" ] && install_brew "azure"
 [ "$DOCKER_ENABLED" = "true" ] && install_brew "docker"
 [ "$KUBERNETES_ENABLED" = "true" ] && install_brew "kubernetes"
 
@@ -37,6 +38,12 @@ if [[ $TECH_STACK == *"ruby"* ]]; then
   echo "Installing ruby packages via gem..."
   gem install brakeman bundler-audit htmlbeautifier reek rubocop
   echo "✅ ruby packages installed via gem..." && echo
+fi
+
+if [[ $TECH_STACK == *"dotnet"* ]]; then
+  echo "Installing dotnet packages..."
+  dotnet tool install csharpier -g
+  echo "✅ dotnet packages installed..." && echo
 fi
 
 read -ra databases <<<"$DATABASES"
