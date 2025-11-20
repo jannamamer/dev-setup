@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eu
+set -u
 
 source config.env
 
@@ -14,6 +14,10 @@ install_asdf() {
   echo "Installing $1..."
   asdf plugin add "$1"
   latest=$(asdf list all "$1" | grep -E '^[0-9]+(\.[0-9]+){0,2}$' | tail -1)
+  if [ -z "$latest" ]; then
+    latest=$(asdf list all "$1" | grep -E '^[a-zA-Z-]*[0-9]+(\.[0-9]+){0,2}$' | tail -1)
+  fi
+
   asdf install "$1" "$latest"
   asdf set --home "$1" "$latest"
   echo "✅ $1 installed..." && echo
@@ -46,8 +50,10 @@ if [[ $TECH_STACK == *"dotnet"* ]]; then
   echo "✅ dotnet packages installed..." && echo
 fi
 
-read -ra databases <<<"$DATABASES"
-for db in "${databases[@]}"; do
-  install_brew "$db"
-  install_asdf "$db"
-done
+if [[ -n "$DATABASES" ]]; then
+  read -ra databases <<<"$DATABASES"
+  for db in "${databases[@]}"; do
+    install_brew "$db"
+    install_asdf "$db"
+  done
+fi

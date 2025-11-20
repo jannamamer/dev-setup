@@ -3,4 +3,4 @@ brew "docker"
 brew "dive"
 brew "hadolint"
 
-cask "docker"
+cask "docker-desktop"
