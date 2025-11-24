@@ -2,8 +2,6 @@
 
 set -u
 
-source config.env
-
 install_brew() {
   echo "Installing $1 packages..."
   brew bundle --file="$PWD/brewfiles/Brewfile.$1"

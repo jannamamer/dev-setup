@@ -22,5 +22,7 @@ echo "✅ nvim files and folders copied..."
 
 echo "Installing plugins..."
 nvim --headless +PlugInstall +qall
-nvim --headless +TSUpdate +qall
+if [ "$VIM_TOOLS" = "true" ]; then
+  nvim --headless +TSUpdate +qall
+fi
 echo && echo "✅ Plugins installed..."
