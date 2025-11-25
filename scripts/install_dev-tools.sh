@@ -3,22 +3,23 @@
 set -u
 
 install_brew() {
-  echo "Installing $1 packages..."
-  brew bundle --file="$PWD/brewfiles/Brewfile.$1"
-  echo "✅ $1 packages installed..." && echo
+	echo "Installing $1 packages..."
+	brew bundle --file="$PWD/brewfiles/Brewfile.$1"
+	echo "✅ $1 packages installed..." && echo
 }
 
 install_asdf() {
-  echo "Installing $1..."
-  asdf plugin add "$1"
-  latest=$(asdf list all "$1" | grep -E '^[0-9]+(\.[0-9]+){0,2}$' | tail -1)
-  if [ -z "$latest" ]; then
-    latest=$(asdf list all "$1" | grep -E '^[a-zA-Z-]*[0-9]+(\.[0-9]+){0,2}$' | tail -1)
-  fi
+	echo "Installing $1..."
+	asdf plugin add "$1"
+	if [[ "$1" = "java" ]]; then
+		latest=$(asdf list all "$1" | grep -v '\-jre' | grep -E '[a-zA-Z-]+[0-9]+(\.[0-9]+){0,2}$' | tail -1)
+	else
+		latest=$(asdf list all "$1" | grep -E '^[0-9]+(\.[0-9]+){0,2}$' | tail -1)
+	fi
 
-  asdf install "$1" "$latest"
-  asdf set --home "$1" "$latest"
-  echo "✅ $1 installed..." && echo
+	asdf install "$1" "$latest"
+	asdf set --home "$1" "$latest"
+	echo "✅ $1 installed..." && echo
 }
 
 install_brew "$GIT_PLATFORM"
@@ -30,28 +31,34 @@ install_brew "$GIT_PLATFORM"
 IFS=','
 read -ra tech_stack <<<"$TECH_STACK"
 for stack in "${tech_stack[@]}"; do
-  [ "$stack" = "go" ] && stack="golang"
+	[ "$stack" = "go" ] && stack="golang"
 
-  install_asdf "$stack"
-  install_brew "$stack"
+	install_asdf "$stack"
+	install_brew "$stack"
 done
 
 if [[ $TECH_STACK == *"ruby"* ]]; then
-  echo "Installing ruby packages via gem..."
-  gem install brakeman bundler-audit htmlbeautifier reek rubocop
-  echo "✅ ruby packages installed via gem..." && echo
+	echo "Installing ruby packages via gem..."
+	gem install brakeman bundler-audit htmlbeautifier reek rubocop
+	echo "✅ ruby packages installed via gem..." && echo
 fi
 
 if [[ $TECH_STACK == *"dotnet"* ]]; then
-  echo "Installing dotnet packages..."
-  dotnet tool install csharpier -g
-  echo "✅ dotnet packages installed..." && echo
+	echo "Installing dotnet packages..."
+	dotnet tool install csharpier -g
+	echo "✅ dotnet packages installed..." && echo
+fi
+
+if [[ $TECH_STACK == *"java"* ]]; then
+	echo "Setting JAVA_HOME..."
+	echo ". $HOME/.asdf/plugins/java/set-java-home.zsh" >>~/.zshrc
+	echo "✅ dotnet packages installed..." && echo
 fi
 
 if [[ -n "$DATABASES" ]]; then
-  read -ra databases <<<"$DATABASES"
-  for db in "${databases[@]}"; do
-    install_brew "$db"
-    install_asdf "$db"
-  done
+	read -ra databases <<<"$DATABASES"
+	for db in "${databases[@]}"; do
+		install_brew "$db"
+		install_asdf "$db"
+	done
 fi

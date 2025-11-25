@@ -22,3 +22,16 @@ for stack in "${tech_stack[@]}"; do
 	var_name="VSCODE_$(echo "$stack" | tr '[:lower:]' '[:upper:]')_EXTENSIONS"
 	install_extensions "${!var_name}"
 done
+
+if [[ $TECH_STACK == *"java"* ]]; then
+	JAVA_VERSION=$(asdf current java | awk 'NR==2 {print $2}')
+	JAVA_PATH="$HOME/.asdf/installs/java/$JAVA_VERSION"
+
+	MERGED_SETTINGS=$(jq --arg path "$JAVA_PATH" --arg version "$JAVA_VERSION" \
+		'."jdk.jdkhome" = $path' ./vscode/settings.json)
+fi
+
+SETTINGS="$HOME/Library/Application Support/Code/User/settings.json"
+TMP=$(mktemp)
+echo "$MERGED_SETTINGS" >"$TMP"
+mv "$TMP" "$SETTINGS"
