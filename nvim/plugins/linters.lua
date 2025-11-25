@@ -1,17 +1,40 @@
 local config = require("utils.config")
 local env = config.get_env()
+local default_linters = {
+	base = [[
+		bash=shellcheck,
+		css=stylelint,
+		html=htmlhint,
+		javascript=eslint,
+		json=spectral,
+		lua=luacheck,
+		markdown=proselint,
+		sh=shellcheck,
+		sql=sqlfluff,
+		yaml=yamllint spectral
+		]],
+	dotnet = "",
+	elixir = "elixir=credo",
+	go = "go=golangcilint",
+	java = "",
+	python = "python=bandit mypy ruff",
+	ruby = "ruby=brakeman reek rubocop",
+	terraform = "hcl=tflint,terraform=tflint tfsec",
+	dockerfile = "dockerfile=hadolint"
+}
+
 local linters = {
-	general = env.VIM_LINTERS or "",
+	general = env.VIM_LINTERS or default_linters.base,
 }
 
 -- Load tech stack specific linters
 for _, stack in ipairs(vim.split(env.TECH_STACK, ",")) do
 	local env_key = "VIM_" .. string.upper(stack) .. "_LINTERS"
-	linters[stack] = env[env_key]
+	linters[stack] = env[env_key] or default_linters[stack]
 end
 
 if env.DOCKER_ENABLED == "true" then
-	linters["dockerfile"] = env["VIM_DOCKERFILE_LINTERS"]
+	linters["dockerfile"] = env.VIM_DOCKERFILE_LINTERS or default_linters.dockerfile
 end
 
 local linters_by_ft = {}

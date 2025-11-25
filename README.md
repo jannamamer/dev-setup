@@ -19,7 +19,7 @@ Configuration for languages, services, formatters, linters, and parsers is defin
 
 ### Configuration Summary
 
-#### 1. Boolean Features / Tools
+#### 1. High-Level Features / Tools
 
 | Feature / Service | Env Variable         | Example |
 | ----------------- | -------------------- | ------- |
@@ -36,7 +36,7 @@ Configuration for languages, services, formatters, linters, and parsers is defin
 | Tech Stack        | `TECH_STACK`   | python,ruby,terraform | dotnet, elixir, go, java, python, ruby, terraform |
 | Git Platform      | `GIT_PLATFORM` | github                | github, gitlab                                    |
 
-#### 3. Databases & File Management
+#### 3. Databases & Files
 
 | Feature / Service  | Env Variable             | Example             | Accepted Values              |
 | ------------------ | ------------------------ | ------------------- | ---------------------------- |
@@ -44,7 +44,7 @@ Configuration for languages, services, formatters, linters, and parsers is defin
 | Special Files      | `SPECIAL_FILES`          | Makefile,README.md  | Comma-separated filenames    |
 | Ignore Directories | `DEPENDENCY_DIRECTORIES` | node_modules,vendor | Comma-separated folder names |
 
-#### 4. Vim Formatters & Linters
+#### 4. Vim Formatters & Linters (optional)
 
 | Feature / Service   | Env Variable                | Example                       | Accepted Values / Reference                                                                   |
 | ------------------- | --------------------------- | ----------------------------- | --------------------------------------------------------------------------------------------- |
@@ -56,7 +56,7 @@ Configuration for languages, services, formatters, linters, and parsers is defin
 
 > Notes: Replace `<LANGUAGE>` with DOTNET, ELIXIR, GO, JAVA, PYTHON, RUBY, TERRAFORM, DOCKER.
 
-#### 5. VS Code Extensions
+#### 5. VS Code Extensions (optional)
 
 | Feature / Service                             | Env Variable                   | Example                             |
 | --------------------------------------------- | ------------------------------ | ----------------------------------- |
@@ -65,6 +65,11 @@ Configuration for languages, services, formatters, linters, and parsers is defin
 | Language Extensions                           | `VSCODE_<LANGUAGE>_EXTENSIONS` | ms-python.python,charliermarsh.ruff |
 
 > Notes: Replace `<SERVICE>` with AWS, AZURE, DOCKER, KUBERNETES, TERRAFORM and `<LANGUAGE>` with DOTNET, ELIXIR, GO, JAVA, PYTHON, RUBY.
+
+#### 6. Notes
+
+- `config.env` only needs **high-level toggles** and any values you want to override.
+- All other defaults are defined in code for simplicity, but can be overridden by setting the corresponding environment variables.
 
 ## Usage
 

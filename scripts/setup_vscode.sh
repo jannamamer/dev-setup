@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
 
+VSCODE_EXTENSIONS='mechatroner.rainbow-csv,htmlhint.vscode-htmlhint,dbaeumer.vscode-eslint,redhat.vscode-yaml,stylelint.vscode-stylelint,timonwong.shellcheck,esbenp.prettier-vscode,mkhl.shfmt'
+VSCODE_AWS_EXTENSIONS='localstack.localstack'
+VSCODE_AZURE_EXTENSIONS='ms-azuretools.vscode-bicep,ms-vscode.powershell,ms-azure-devops.azure-pipelines,ms-vscode.azurecli'
+VSCODE_DOCKER_EXTENSIONS='ms-azuretools.vscode-containers,docker.docker'
+VSCODE_KUBERNETES_EXTENSIONS='ms-kubernetes-tools.vscode-kubernetes-tools'
+
+VSCODE_DOTNET_EXTENSIONS='ms-dotnettools.csdevkit,ms-dotnettools.csharp'
+VSCODE_ELIXIR_EXTENSIONS='jakebecker.elixir-ls'
+VSCODE_GO_EXTENSIONS='golang.go'
+VSCODE_JAVA_EXTENSIONS='oracle.oracle-java'
+VSCODE_PYTHON_EXTENSIONS='ms-python.python,charliermarsh.ruff,ms-python.black-formatter,ms-python.isort,ms-python.mypy-type-checker,ms-python.vscode-pylance,ms-python.flake8'
+VSCODE_TERRAFORM_EXTENSIONS='hashicorp.terraform'
+
 install_extensions() {
 	IFS=','
 	read -ra extensions <<<"$1"
