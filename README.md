@@ -19,36 +19,52 @@ Configuration for languages, services, formatters, linters, and parsers is defin
 
 ### Configuration Summary
 
-| Feature / Service        | Env Variable                 | Example Value                               | Accepted Values                                                                                                                             |
-| ------------------------ | ---------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Tech Stack**           | `TECH_STACK`                 | `python,ruby,terraform`                     | `elixir`, `go`, `python`, `ruby`, `terraform`                                                                                               |
-| **AWS Tools**            | `AWS_ENABLED`                | `true`                                      | `true`, `false`                                                                                                                             |
-| **Docker Tools**         | `DOCKER_ENABLED`             | `true`                                      | `true`, `false`                                                                                                                             |
-| **Kubernetes Tools**     | `KUBERNETES_ENABLED`         | `false`                                     | `true`, `false`                                                                                                                             |
-| **Git Platform**         | `GIT_PLATFORM`               | `github`                                    | `github`, `gitlab`                                                                                                                          |
-| **Databases**            | `DATABASES`                  | `postgres`                                  | `postgres`, `mysql`                                                                                                                         |
-| **Special Files**        | `SPECIAL_FILES`              | `Makefile,README.md`                        | Comma-separated list of filenames                                                                                                           |
-| **Ignore Directories**   | `DEPENDENCY_DIRECTORIES`     | `node_modules,vendor`                       | Comma-separated list of folder names                                                                                                        |
-| **VIM Tools**            | `VIM_TOOLS`                  | `true`                                      | `true`, `false`                                                                                                                             |
-| **VIM Base Parsers**     | `VIM_PARSERS`                | `bash,json,markdown`                        | Must match [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#supported-languages) supported languages |
-| **VIM Base Formatters**  | `VIM_FORMATTERS`             | `bash=shfmt, lua=stylua`                    | Must match [conform.nvim](https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters) supported formatters                      |
-| **VIM Base Linters**     | `VIM_LINTERS`                | `bash=shellcheck, yaml=yamllint`            | Must match [nvim-lint](https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file#available-linters) supported linters                    |
-| **Dotnet Formatters**    | `VIM_DOTNET_FORMATTERS`      | `csharp=csharpier`                          | Must match [conform.nvim](https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters) supported formatters for C#               |
-| **Dotnet Linters**       | `VIM_DOTNET_LINTERS`         | ``                                          | Must match [nvim-lint](https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file#available-linters) supported linters for C#             |
-| **Elixir Formatters**    | `VIM_ELIXIR_FORMATTERS`      | `elixir=mix,heex=mix`                       | Must match [conform.nvim](https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters) supported formatters for Elixir           |
-| **Elixir Linters**       | `VIM_ELIXIR_LINTERS`         | `elixir=credo`                              | Must match [nvim-lint](https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file#available-linters) supported linters for Elixir         |
-| **Go Formatters**        | `VIM_GO_FORMATTERS`          | `go=gofmt goimports`                        | Must match [conform.nvim](https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters) supported formatters for Go               |
-| **Go Linters**           | `VIM_GO_LINTERS`             | `go=golangcilint`                           | Must match [nvim-lint](https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file#available-linters) supported linters for Go             |
-| **Java Formatters**      | `VIM_JAVA_FORMATTERS`        | ``                                          | Must match [conform.nvim](https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters) supported formatters for Java             |
-| **Java Linters**         | `VIM_JAVA_LINTERS`           | ``                                          | Must match [nvim-lint](https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file#available-linters) supported linters for Java           |
-| **Python Formatters**    | `VIM_PYTHON_FORMATTERS`      | `python=black isort`                        | Must match [conform.nvim](https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters) supported formatters for Python           |
-| **Python Linters**       | `VIM_PYTHON_LINTERS`         | `python=bandit mypy ruff`                   | Must match [nvim-lint](https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file#available-linters) supported linters for Python         |
-| **Ruby Formatters**      | `VIM_RUBY_FORMATTERS`        | `ruby=rubocop,eruby=htmlbeautifier rubocop` | Must match [conform.nvim](https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters) supported formatters for Ruby             |
-| **Ruby Linters**         | `VIM_RUBY_LINTERS`           | `ruby=brakeman reek rubocop`                | Must match [nvim-lint](https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file#available-linters) supported linters for Ruby           |
-| **Terraform Formatters** | `VIM_TERRAFORM_FORMATTERS`   | `hcl=hcl,terraform=terraform_fmt`           | Must match [conform.nvim](https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters) supported formatters for Terraform        |
-| **Terraform Linters**    | `VIM_TERRAFORM_LINTERS`      | `hcl=tflint,terraform=tflint tfsec`         | Must match [nvim-lint](https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file#available-linters) supported linters for Terraform      |
-| **Docker Formatters**    | `VIM_DOCKERFILE_FORMATTERS`  | ``                                          | Must match [conform.nvim](https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters) supported formatters for Docker           |
-| **Docker Linters**       | `VIM_DOCKERFILE_LINTERS`     | `dockerfile=hadolint`                       | Must match [nvim-lint](https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file#available-linters) supported linters for Docker         |
+#### 1. Boolean Features / Tools
+
+| Feature / Service | Env Variable         | Example |
+| ----------------- | -------------------- | ------- |
+| VIM Tools         | `VIM_TOOLS`          | true    |
+| VS Code Tools     | `VSCODE_TOOLS`       | true    |
+| AWS Tools         | `AWS_ENABLED`        | true    |
+| Docker Tools      | `DOCKER_ENABLED`     | true    |
+| Kubernetes Tools  | `KUBERNETES_ENABLED` | false   |
+
+#### 2. Tech Stack & Git
+
+| Feature / Service | Env Variable   | Example               | Accepted Values                                   |
+| ----------------- | -------------- | --------------------- | ------------------------------------------------- |
+| Tech Stack        | `TECH_STACK`   | python,ruby,terraform | dotnet, elixir, go, java, python, ruby, terraform |
+| Git Platform      | `GIT_PLATFORM` | github                | github, gitlab                                    |
+
+#### 3. Databases & File Management
+
+| Feature / Service  | Env Variable             | Example             | Accepted Values              |
+| ------------------ | ------------------------ | ------------------- | ---------------------------- |
+| Databases          | `DATABASES`              | postgres            | postgres, mysql              |
+| Special Files      | `SPECIAL_FILES`          | Makefile,README.md  | Comma-separated filenames    |
+| Ignore Directories | `DEPENDENCY_DIRECTORIES` | node_modules,vendor | Comma-separated folder names |
+
+#### 4. Vim Formatters & Linters
+
+| Feature / Service   | Env Variable                | Example                       | Accepted Values / Reference                                                                   |
+| ------------------- | --------------------------- | ----------------------------- | --------------------------------------------------------------------------------------------- |
+| Vim Base Parsers    | `VIM_PARSERS`               | bash,json,markdown            | See [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter#supported-languages) |
+| Vim Base Formatters | `VIM_FORMATTERS`            | bash=shfmt,lua=stylua         | See [conform.nvim](https://github.com/stevearc/conform.nvim#formatters)                       |
+| Vim Base Linters    | `VIM_LINTERS`               | bash=shellcheck,yaml=yamllint | See [nvim-lint](https://github.com/mfussenegger/nvim-lint#available-linters)                  |
+| Vim Formatters      | `VIM_<LANGUAGE>_FORMATTERS` | bash=shfmt,lua=stylua         | See [conform.nvim](https://github.com/stevearc/conform.nvim) supported formatters             |
+| Vim Linters         | `VIM_<LANGUAGE>_LINTERS`    | bash=shellcheck,yaml=yamllint | See [nvim-lint](https://github.com/mfussenegger/nvim-lint) supported linters                  |
+
+> Notes: Replace `<LANGUAGE>` with DOTNET, ELIXIR, GO, JAVA, PYTHON, RUBY, TERRAFORM, DOCKER.
+
+#### 5. VS Code Extensions
+
+| Feature / Service                             | Env Variable                   | Example                             |
+| --------------------------------------------- | ------------------------------ | ----------------------------------- |
+| Base Extensions                               | `VSCODE_EXTENSIONS`            | davidanson.vscode-markdownlint      |
+| AWS / Azure / Docker / Kubernetes / Terraform | `VSCODE_<SERVICE>_EXTENSIONS`  | ms-azuretools.vscode-containers     |
+| Language Extensions                           | `VSCODE_<LANGUAGE>_EXTENSIONS` | ms-python.python,charliermarsh.ruff |
+
+> Notes: Replace `<SERVICE>` with AWS, AZURE, DOCKER, KUBERNETES, TERRAFORM and `<LANGUAGE>` with DOTNET, ELIXIR, GO, JAVA, PYTHON, RUBY.
 
 ## Usage
 
